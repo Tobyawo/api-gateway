@@ -1,0 +1,16 @@
+services:
+  ea-api-gateway:
+    container_name: ea-api-gateway-container
+    image: ea-api-gateway
+    build: ./
+    restart: on-failure
+    ports:
+      - "8181:8181"
+
+networks:
+  default:
+    external:
+      name: ea-services-docker-network
+
+#Network: Make sure the network ea-services-docker-network is created and available:
+#docker network create ea-services-docker-network
