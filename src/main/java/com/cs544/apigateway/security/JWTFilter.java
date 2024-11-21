@@ -26,7 +26,7 @@ public class JWTFilter implements WebFilter {
 
         String path = exchange.getRequest().getPath().value();
 
-        if (path.startsWith("/gm-user/api/sign-up") || path.startsWith("/auth") || path.startsWith("/actuator")) {
+        if (path.startsWith("/actuator") || path.startsWith("/customers/sign-up")) {
             return chain.filter(exchange);
         }
 

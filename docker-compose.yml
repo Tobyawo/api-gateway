@@ -6,9 +6,27 @@ services:
     restart: on-failure
     ports:
       - "8181:8181"
+    environment:
+      - SPRING_APPLICATION_NAME=ea-api-gateway
+      - SERVER_PORT=8181
+      - SPRING_MAIN_WEB_APPLICATION_TYPE=reactive
+      - SPRING_MAIN_ALLOW_BEAN_DEFINITION_OVERRIDING=true
+      - JWT_SECRET=somerandomsecret
+      - SPRING_CLOUD_GATEWAY_ROUTES_0_ID=customer-service
+      - SPRING_CLOUD_GATEWAY_ROUTES_0_URI=http://ea-customer-service:8098
+      - SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0=Path=/customers/**
+      - SPRING_CLOUD_GATEWAY_ROUTES_1_ID=account-service
+      - SPRING_CLOUD_GATEWAY_ROUTES_1_URI=http://ea-account-service:8999
+      - SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0=Path=/account-service/**
+      - SPRING_CLOUD_GATEWAY_ROUTES_2_ID=user-service
+      - SPRING_CLOUD_GATEWAY_ROUTES_2_URI=http://ea-user-service:8087
+      - SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0=Path=/gm-user/**
 
 networks:
   default:
+    external:
+      name: gm-services-docker-network
+  secondary_network:
     external:
       name: ea-services-docker-network
 
